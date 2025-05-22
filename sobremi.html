@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Mundo - 19 Años de Autenticidad</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Efecto de lluvia animada */
+        .rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .drop {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(to bottom, transparent, rgba(174, 194, 224, 0.6));
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(5deg); opacity: 0; }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #64b5f6, #bbdefb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .age-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #1976d2, #42a5f5);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .section {
+            margin-bottom: 40px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #90caf9;
+            border-bottom: 2px solid #1976d2;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon {
+            font-size: 2rem;
+        }
+
+        .content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #e3f2fd;
+        }
+
+        .likes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .like-item {
+            background: linear-gradient(135deg, #1565c0, #1976d2);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .like-item:hover {
+            transform: scale(1.05);
+        }
+
+        .like-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .dislikes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .dislike-item {
+            background: linear-gradient(135deg, #c62828, #d32f2f);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .dislike-item:hover {
+            transform: scale(1.02);
+        }
+
+        .reflection {
+            background: linear-gradient(135deg, #263238, #37474f);
+            border-left: 5px solid #64b5f6;
+            font-style: italic;
+            position: relative;
+        }
+
+        .reflection::before {
+            content: '"';
+            font-size: 4rem;
+            color: #64b5f6;
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            opacity: 0.5;
+        }
+
+        .single-status {
+            background: linear-gradient(135deg, #4a148c, #6a1b9a);
+            border: 2px solid #9c27b0;
+        }
+
+        .night-theme {
+            background: linear-gradient(135deg, #0d1421, #1a237e);
+            border: 2px solid #3f51b5;
+        }
+
+        .strength-message {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: 2px solid #4caf50;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .likes-grid, .dislikes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Estrellas de fondo */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Efecto de lluvia -->
+    <div class="rain" id="rain"></div>
+    
+    <!-- Estrellas de fondo -->
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <header>
+            <h1>Mi Mundo Auténtico</h1>
+            <div class="age-badge">19 Años de Vida Real</div>
+        </header>
+
+        <div class="section night-theme">
+            <h2 class="section-title">
+                <span class="icon">🌙</span>
+                Lo Que Me Define
+            </h2>
+            <div class="content">
+                Soy alguien que ha aprendido a valorar la autenticidad en un mundo lleno de máscaras. 
+                A los 19 años, he descubierto que ser genuino es más importante que ser popular.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">❤️</span>
+                Mis Pasiones
+            </h2>
+            <div class="likes-grid">
+                <div class="like-item">
+                    <div class="like-icon">⚽</div>
+                    <h3>El Deporte</h3>
+                    <p>Mi escape, mi pasión, donde encuentro libertad y superación personal</p>
+                </div>
+                <div class="like-item">
+                    <div class="like-icon">🏍️</div>
+                    <h3>Las Motos</h3>
+                    <p>Velocidad, libertad y la sensación de volar sobre el asfalto</p>
+                </div>
+                <div class="like-item">
+                    <div class="like-icon">🌙</div>
+                    <h3>La Noche</h3>
+                    <p>Cuando el mundo se calma y puedo ser yo mismo sin juicios</p>
+                </div>
+                <div class="like-item">
+                    <div class="like-icon">🌧️</div>
+                    <h3>La Lluvia</h3>
+                    <p>Su sonido me tranquiliza y me hace reflexionar sobre la vida</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">🚫</span>
+                Lo Que No Tolero
+            </h2>
+            <div class="dislikes-grid">
+                <div class="dislike-item">
+                    <div class="like-icon">👑</div>
+                    <h3>Personas Creídas</h3>
+                    <p>La arrogancia y la superioridad falsa no tienen lugar en mi mundo</p>
+                </div>
+                <div class="dislike-item">
+                    <div class="like-icon">💬</div>
+                    <h3>Críticas Destructivas</h3>
+                    <p>He vivido demasiado tiempo con palabras que hieren sin construir</p>
+                </div>
+                <div class="dislike-item">
+                    <div class="like-icon">😤</div>
+                    <h3>Los Insultos</h3>
+                    <p>Han sido parte de mi vida por mucho tiempo, pero no los acepto más</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reflection">
+            <h2 class="section-title">
+                <span class="icon">💭</span>
+                Mi Reflexión Personal
+            </h2>
+            <div class="content">
+                He vivido gran parte de mi vida rodeado de críticas e insultos. Esas palabras han intentado 
+                definirme, pero he aprendido que mi valor no depende de la opinión de otros. Cada día trabajo 
+                en construir una versión más fuerte de mí mismo, una que no se deje afectar por la negatividad 
+                externa. Las cicatrices emocionales me han enseñado empatía y me han hecho más humano.
+            </div>
+        </div>
+
+        <div class="section single-status">
+            <h2 class="section-title">
+                <span class="icon">💜</span>
+                Mi Estado Actual
+            </h2>
+            <div class="content">
+                Estoy soltero, no por falta de oportunidades, sino porque creo en las conexiones genuinas. 
+                No me conformo con relaciones superficiales. Prefiero estar solo y ser auténtico que 
+                acompañado y fingir ser alguien que no soy. Cuando llegue la persona correcta, será alguien 
+                que valore mi autenticidad y no trate de cambiarme. Mientras tanto, trabajo en ser la mejor 
+                versión de mí mismo.
+            </div>
+        </div>
+
+        <div class="section strength-message">
+            <h2 class="section-title">
+                <span class="icon">💪</span>
+                Mi Mensaje
+            </h2>
+            <div class="content">
+                A los 20 años he aprendido que ser diferente no es un defecto, es una fortaleza. 
+                Cada crítica que he recibido me ha hecho más resiliente. Cada insulto que he soportado 
+                me ha enseñado el valor del respeto. No necesito la aprobación de todos para ser valioso. 
+                Mi autenticidad es mi superpoder.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Crear efecto de lluvia
+        function createRain() {
+            const rain = document.getElementById('rain');
+            for (let i = 0; i < 100; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'drop';
+                drop.style.left = Math.random() * 100 + '%';
+                drop.style.animationDuration = Math.random() * 2 + 1 + 's';
+                drop.style.animationDelay = Math.random() * 2 + 's';
+                rain.appendChild(drop);
+            }
+        }
+
+        // Crear estrellas
+        function createStars() {
+            const stars = document.getElementById('stars');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                stars.appendChild(star);
+            }
+        }
+
+        // Inicializar efectos
+        createRain();
+        createStars();
+    </script>
+</body>
+</html>
